@@ -21,7 +21,6 @@ public class MainScreen extends BaseScreen {
         ship = new Ship(new Texture("ship.png"), 100, 100);
     }
 
-
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 0, 0, 1);
