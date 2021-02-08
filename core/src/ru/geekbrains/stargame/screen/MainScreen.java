@@ -11,6 +11,7 @@ import ru.geekbrains.stargame.wip.Ship;
 public class MainScreen extends BaseScreen {
     private Texture img;
     private Ship ship;
+    private int height;
 
     @Override
     public void show() {
@@ -39,6 +40,24 @@ public class MainScreen extends BaseScreen {
     }
 
     private void drawShip() {
-        batch.draw(ship.tick(), ship.x, ship.y);
+        ship.tick();
+        batch.draw(ship.getImg(), ship.x, ship.y);
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        ship.setMovementTarget(screenX, translate(screenY));
+        return super.touchDown(screenX, screenY, pointer, button);
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        this.height = height;
+        System.out.println(height);
+        super.resize(width, height);
+    }
+
+    private float translate(float y) {
+        return height - y;
     }
 }
