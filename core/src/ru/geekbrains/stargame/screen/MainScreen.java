@@ -4,21 +4,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
-import ru.geekbrains.stargame.base.BaseScreen;
-import ru.geekbrains.stargame.wip.Ship;
+import ru.geekbrains.stargame.math.Rect;
+import ru.geekbrains.stargame.sprite.Background;
+import ru.geekbrains.stargame.sprite.Ship;
 
 public class MainScreen extends BaseScreen {
-    private Texture img;
-    private Ship ship;
-    private int height;
+    private Texture bg;
+    private Background back;
 
     @Override
     public void show() {
         super.show();
         batch = new SpriteBatch();
-        img = new Texture("planets.jpg");
-        ship = new Ship(new Texture("ship.png"), 100, 100);
+        bg = new Texture("planets.jpg");
+        back = new Background(bg);
     }
 
     @Override
@@ -26,37 +27,24 @@ public class MainScreen extends BaseScreen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(img, 0, 0);
-        drawShip();
+        batch.draw(bg, 0, 0);
+        back.draw(batch);
         batch.end();
     }
 
     @Override
     public void dispose() {
-        img.dispose();
-        ship.dispose();
+        bg.dispose();
         super.dispose();
     }
 
-    private void drawShip() {
-        ship.tick();
-        batch.draw(ship.getImg(), ship.x, ship.y);
+    @Override
+    public boolean touchDown(Vector2 touch, int pointer, int button) {
+        return false;
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        ship.setMovementTarget(screenX, translate(screenY));
-        return super.touchDown(screenX, screenY, pointer, button);
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        this.height = height;
-        System.out.println(height);
-        super.resize(width, height);
-    }
-
-    private float translate(float y) {
-        return height - y;
+    public void resize(Rect worldBounds) {
+        back.resize(worldBounds);
     }
 }
