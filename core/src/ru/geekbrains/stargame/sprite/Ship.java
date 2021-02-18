@@ -20,6 +20,10 @@ public class Ship extends Sprite {
         super(new TextureRegion(texture));
     }
 
+    public Ship(TextureRegion region) {
+        super(region);
+    }
+
     @Override
     public void resize(Rect worldBounds) {
         this.pos.set(worldBounds.pos);
@@ -44,6 +48,12 @@ public class Ship extends Sprite {
         } else {
             pos.add(spd);
         }
+    }
+
+    @Override
+    public boolean touchDown(Vector2 touch, int pointer, int button) {
+        setMovementTarget(touch);
+        return false;
     }
 
     public void setMovementTarget(Vector2 v2) {
