@@ -28,8 +28,12 @@ public class Ship extends Sprite {
 
     @Override
     public void draw(SpriteBatch batch) {
-        if (moving) move();
         super.draw(batch);
+    }
+
+    @Override
+    public void update(float delta) {
+        if (moving) move();
     }
 
     private void move() {
